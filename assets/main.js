@@ -25,36 +25,9 @@
     }
   });
 
-  $('#robot-disconnect').on('click', function() {
-    ws.send(JSON.stringify({command: "robot_disconnect"}));
-  });
-
-  $('#save-json').on('click', function() {
-    try {
-      jsonData = JSON.parse($('#json-data').val());
-      ws.send(JSON.stringify({command: "set_motion_command", json_data: jsonData}));
-    } catch(e) {
-      alert("JSONの構文が間違っています")
-    }
-  });
-
-  $('#renv-connect').on('click', function() {
-    if ($('#websocket').val() == '') {
-      alert("websocketを指定してください。");
-    } else {
-      ws.send(JSON.stringify({command: "renv_connect", websocket: $('#websocket').val()}));
-    }
-  });
-
-  $('#renv-disconnect').on('click', function() {
-    ws.send(JSON.stringify({command: "renv_disconnect"}));
-  });
-
   $('#json-data').on('change keyup', function() {
     buttonEnable($('#save-json'));
   });
-
-  var json = {};
 
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
