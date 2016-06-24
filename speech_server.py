@@ -24,7 +24,7 @@ class SpeechManager():
 	OPENJTALK_EXE = '/usr/bin/open_jtalk'
 	OPENJTALK_DIC_DIR = '/var/lib/mecab/dic/open-jtalk/naist-jdic'
 	OPENJTALK_VOICE_DIR = './voice'
-	MPLAYER = '/usr/bin/mplayer'
+	MPLAYER_EXE = '/usr/bin/mplayer'
 	WORK_DIR = './'
 	def __init__(self):
 		pass
@@ -37,8 +37,8 @@ class SpeechManager():
 		open_jtalk.wait()
 		print('done')
 		print('Playing speech data...,', end='')
-		mplayer_command = [SpeechManager.MPLAYER, '-really-quiet', speech_file]
-		mplayer = subprocess.call(mplayer_command)
+		mplayer_command = [SpeechManager.MPLAYER_EXE, '-really-quiet', speech_file]
+		mplayer = subprocess.Popen(mplayer_command)
 		mplayer.wait()
 		print('done')
 		print('Deleting speech data...,', end='')
