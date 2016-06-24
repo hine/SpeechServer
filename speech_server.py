@@ -24,7 +24,7 @@ class SpeechManager():
 	OPENJTALK_DIC_DIR = '/var/lib/mecab/dic/open-jtalk/naist-jdic'
 	OPENJTALK_VOICE_DIR = './voice'
 	MPLAYER = '/usr/bin/mplayer'
-	WORK_DIR = '/var/tmp'
+	WORK_DIR = './'
 	def __init__(self):
 		pass
 	def say(self, text):
