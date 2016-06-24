@@ -29,11 +29,13 @@ class SpeechManager():
 		pass
 	def say(self, text):
 		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d') + '.wav'
-		open_jtalk = subprocess.call(SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei-happy.htsvoice', '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file, stdin=subprocess.PIPE)
+		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei-happy.htsvoice', '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
+		open_jtalk = subprocess.call(open_jtalk_command, stdin=subprocess.PIPE)
 		open_jtalk.stdin.write(text)
 		open_jtalk.stdin.close()
 		open_jtalk.wait()
-		subprocess.call(mplayer_command, speech_file)
+		mplayer_command = [SpeechManager.MPLAYER, speech_file]
+		subprocess.call(mplayer_command)
 
 #ここからTornadeでのWeb/WebSocketサーバーに関する定義
 class IndexHandler(tornado.web.RequestHandler):
