@@ -42,6 +42,7 @@ class SpeechManager():
 		mplayer.wait()
 		print('done')
 		print('Deleting speech data...,', end='')
+		time.sleep(0.1)
 		os.remove(speech_file)
 		print('done')
 		print('')
@@ -87,7 +88,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 		print('got message:', received_data['command'])
 		if received_data['command'] == 'say':
 			print('Saying...', end='')
-			# 発話に関する処理を入れる
+			#print(received_data['data']['text'])
+			speech_manager.say(received_data['data']['text'], received_data['data']['voice'])
 			print('done')
 
 	def _send_message(self):
@@ -112,7 +114,8 @@ if __name__ == '__main__':
 		static_path=os.path.join(os.getcwd(),  'assets'),
 	)
 
-	ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
+	#ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
+	ip_addr = '192.168.1.1';
 
 	# Tornadoサーバー起動
 	print('Starting Web/WebSocket Server...', end='')
@@ -124,8 +127,6 @@ if __name__ == '__main__':
 
 	speech_manager = SpeechManager()
 	speech_manager.say('スピーチサーバーが起動しました。')
-
 	speech_manager.say('IPアドレスは、' + ip_addr + 'です。')
-
 
 	tornado.ioloop.IOLoop.instance().start()

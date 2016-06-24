@@ -17,69 +17,22 @@
     }
   };
 
-  $('#robot-connect').on('click', function() {
-    if ($('#serial-port').val() == '') {
-      alert("シリアルポートを指定してください。");
+  $('#send-text').on('click', function() {
+    if ($('#voice').val() == '') {
+      alert("ボイスファイルを指定してください。");
     } else {
-      ws.send(JSON.stringify({command: "robot_connect", port: $('#serial-port').val()}));
+      ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
     }
   });
 
-  $('#json-data').on('change keyup', function() {
-    buttonEnable($('#save-json'));
+  $('#speech-text').on('change keyup', function() {
+    buttonEnable($('#send-text'));
   });
 
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
     message = messageData['message']
-    if (message == 'robot_connected') {
-      $('#serial-port').prop("disabled", true);
-      buttonDisable($('#robot-connect'));
-      buttonEnable($('#robot-disconnect'));
-      alert('ロボットに接続されました。');
-    }
-    if (message == 'robot_cannot_connect') {
-      alert('ロボットに接続出来ませんでした。シリアルポートの確認をしてください。');
-    }
-    if (message == 'robot_disconnected') {
-      $('#serial-port').prop("disabled", false);
-      buttonEnable($('#robot-connect'));
-      buttonDisable($('#robot-disconnect'));
-    }
-    if (message == 'motion_command') {
-      json = messageData['json_data'];
-      printJSON();
-      buttonEnable($('#save-json'));
-      $('#editor').jsonEditor(json, { change: updateJSON, propertyclick: showPath });
-      $('#json-data').change(function() {
-        var val = $('#json-data').val();
-        if (val) {
-          try {
-            json = JSON.parse(val);
-          }
-          catch (e) {
-            alert('Error in parsing json. ' + e);
-          }
-        } else {
-          json = {};
-        }
-        $('#editor').jsonEditor(json, { change: updateJSON, propertyclick: showPath });
-      });
-      $('#expander').click(function() {
-        var editor = $('#editor');
-        editor.toggleClass('expanded');
-        $(this).text(editor.hasClass('expanded') ? 'Collapse' : 'Expand all');
-      });
-    }
-    if (message == 'renv_connected') {
-      buttonDisable($('#renv-connect'));
-      buttonEnable($('#renv-disconnect'));
-      alert('R-env(連舞)に接続されました');
-    }
-    if (message == 'renv_cannot_connect') {
-      alert('R-env(連舞)に接続出来ませんでした。Scratchの起動と遠隔センサーの設定の確認をしてください。');
-    }
-    if (message == 'renv_disconnected') {
+    if (message == 'connected') {
       buttonEnable($('#renv-connect'));
       buttonDisable($('#renv-disconnect'));
     }
