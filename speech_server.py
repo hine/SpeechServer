@@ -29,7 +29,7 @@ class SpeechManager():
 		pass
 	def say(self, text):
 		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d') + '.wav'
-		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei-happy.htsvoice', '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
+		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei_happy.htsvoice', '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
 		open_jtalk = subprocess.Popen(open_jtalk_command, stdin=subprocess.PIPE)
 		open_jtalk.communicate(text)
 		open_jtalk.wait()
