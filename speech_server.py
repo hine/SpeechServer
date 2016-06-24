@@ -28,14 +28,23 @@ class SpeechManager():
 	WORK_DIR = './'
 	def __init__(self):
 		pass
-	def say(self, text):
-		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d') + '.wav'
-		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei_happy.htsvoice', '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
+	def say(self, text, voice='mei/mei_happy.htsvoice'):
+		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.wav'
+		print('Makeing speech data...,', end='')
+		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/' + voice, '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
 		open_jtalk = subprocess.Popen(open_jtalk_command, universal_newlines=True, stdin=subprocess.PIPE)
 		open_jtalk.communicate(text)
 		open_jtalk.wait()
-		mplayer_command = [SpeechManager.MPLAYER, speech_file]
-		subprocess.call(mplayer_command)
+		print('done')
+		print('Playing speech data...,', end='')
+		mplayer_command = [SpeechManager.MPLAYER, '-really-quiet', speech_file]
+		mplayer = subprocess.call(mplayer_command)
+		mplayer.wait()
+		print('done')
+		print('Deleting speech data...,', end='')
+		os.remove(speech_file)
+		print('done')
+		print('')
 
 #ここからTornadeでのWeb/WebSocketサーバーに関する定義
 class IndexHandler(tornado.web.RequestHandler):
