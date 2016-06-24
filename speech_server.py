@@ -15,6 +15,7 @@ import datetime
 import json
 import subprocess
 
+import netifaces
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
@@ -102,15 +103,20 @@ if __name__ == '__main__':
 		static_path=os.path.join(os.getcwd(),  'assets'),
 	)
 
-	speech_manager = SpeechManager()
-	speech_manager.say('スピーチサーバーが起動しました')
+	ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
 
 	# Tornadoサーバー起動
 	print('Starting Web/WebSocket Server...', end='')
 	web_application.listen(8888)
 	print('done')
 
-	print('Open http://(SpeechServer_IP):8888/')
+	print('Open http://' + ip_addr + ':8888/')
 	print('')
+
+	speech_manager = SpeechManager()
+	speech_manager.say('スピーチサーバーが起動しました。')
+
+	speech_manager.say('IPアドレスは、' + ip_addr + 'です。')
+
 
 	tornado.ioloop.IOLoop.instance().start()
