@@ -28,7 +28,6 @@ class SpeechManager():
 	def __init__(self):
 		pass
 	def say(self, text):
-		datetime()
 		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.now().strftime('%Y/%m/%d') + '.wav'
 		open_jtalk_command = SpeechManager.OPENJTALK_EXE + ' -m ' +  SpeechManager.OPENJTALK_VOICE_DIR + '/mei/mei-happy.htsvoice -x ' + SpeechManager.OPENJTALK_DIC_DIR + ' -ow ' + speech_file
 		open_jtalk = subprocess.Popen(command, stdin=subprocess.PIPE)
