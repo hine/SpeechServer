@@ -114,8 +114,8 @@ if __name__ == '__main__':
 		static_path=os.path.join(os.getcwd(),  'assets'),
 	)
 
-	#ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
-	ip_addr = '192.168.1.1';
+	ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
+	#ip_addr = '192.168.1.1';
 
 	# Tornadoサーバー起動
 	print('Starting Web/WebSocket Server...', end='')
