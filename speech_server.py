@@ -10,6 +10,7 @@ http://opensource.org/licenses/mit-license.php
 '''
 import os
 import sys
+import glob
 import time
 import datetime
 import json
@@ -48,8 +49,8 @@ class SpeechManager():
 		print('done')
 		if not keep_file:
 			print('Deleting speech data...,', end='')
-			time.sleep(0.1)
-			os.remove(speech_file)
+			voice_list = [os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*.htsvoice')].extend[os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*/*.htsvoice]
+			print(voice_list);
 			print('done')
 		print('')
 
@@ -103,6 +104,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 					print('done')
 			'''
 			print('Saying...', end='')
+			#print(received_data['data']['text'])
+			speech_manager.say(received_data['data']['text'], received_data['data']['voice'])
+			print('done')
+		if received_data['command'] == 'voice_list':
+			print('Get Voice List...', end='')
 			#print(received_data['data']['text'])
 			speech_manager.say(received_data['data']['text'], received_data['data']['voice'])
 			print('done')
