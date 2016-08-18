@@ -14,6 +14,7 @@ import time
 import datetime
 import json
 import subprocess
+import ConfigParser
 
 import netifaces
 import tornado.ioloop
@@ -109,6 +110,9 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 if __name__ == '__main__':
 
+	inifile = ConfigParser.SafeConfigParser()
+	inifile.read("./config.ini")
+
 	# アプリケーション割り当て
 	web_application = tornado.web.Application(
 		[
@@ -131,7 +135,7 @@ if __name__ == '__main__':
 	print('')
 
 	speech_manager = SpeechManager()
-	speech_manager.say('スピーチサーバーが起動しました。')
+	speech_manager.say(inifile['Settings']['BootMessage'])
 	speech_manager.say('IPアドレスは、' + ip_addr + 'です。')
 
 	tornado.ioloop.IOLoop.instance().start()
