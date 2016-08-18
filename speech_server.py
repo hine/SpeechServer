@@ -93,10 +93,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 		received_data = json.loads(message)
 		print('got message:', received_data['command'])
 		if received_data['command'] == 'say':
-			print('Saying...', end='')
-			#print(received_data['data']['text'])
-			speech_manager.say(received_data['data']['text'], received_data['data']['voice'])
-			print('done')
+			talk_scripts = received_data['data']['text'].split('。')
+			for talk_script in talk_scripts:
+				if talk_script != '':
+					print('Saying...', end='')
+					#print(received_data['data']['text'])
+					speech_manager.say(talk_script, received_data['data']['voice'])
+					print('done')
 
 	def _send_message(self):
 		pass
