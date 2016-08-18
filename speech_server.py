@@ -28,8 +28,11 @@ class SpeechManager():
 	WORK_DIR = './'
 	def __init__(self):
 		pass
-	def say(self, text, voice='mei/mei_happy.htsvoice'):
-		speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.wav'
+	def say(self, text, voice='mei/mei_happy.htsvoice', file_name=None, keep_file=False):
+		if file_name is None:
+			speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.wav'
+		else:
+			speech_file = file_name
 		print('Makeing speech data...,', end='')
 		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/' + voice, '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
 		open_jtalk = subprocess.Popen(open_jtalk_command, universal_newlines=True, stdin=subprocess.PIPE)
@@ -41,10 +44,11 @@ class SpeechManager():
 		mplayer = subprocess.Popen(mplayer_command)
 		mplayer.wait()
 		print('done')
-		print('Deleting speech data...,', end='')
-		time.sleep(0.1)
-		os.remove(speech_file)
-		print('done')
+		if !keep_file:
+			print('Deleting speech data...,', end='')
+			time.sleep(0.1)
+			os.remove(speech_file)
+			print('done')
 		print('')
 
 #ここからTornadeでのWeb/WebSocketサーバーに関する定義
