@@ -23,18 +23,19 @@ import tornado.websocket
 class SpeechManager():
 	OPENJTALK_EXE = '/usr/bin/open_jtalk'
 	OPENJTALK_DIC_DIR = '/var/lib/mecab/dic/open-jtalk/naist-jdic'
-	OPENJTALK_VOICE_DIR = './voice'
+	OPENJTALK_VOICE_DIR = './voice/'
 	MPLAYER_EXE = '/usr/bin/mplayer'
-	WORK_DIR = './'
+	WORK_DIR = '/tmp/'
+	TALK_DIR = './talk/'
 	def __init__(self):
 		pass
 	def say(self, text, voice='mei/mei_happy.htsvoice', file_name=None, keep_file=False):
 		if file_name is None:
 			speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.wav'
 		else:
-			speech_file = file_name
+			speech_file = SpeechManager.TALK_DIR + file_name + '.wav'
 		print('Makeing speech data...,', end='')
-		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + '/' + voice, '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
+		open_jtalk_command = [SpeechManager.OPENJTALK_EXE, '-m', SpeechManager.OPENJTALK_VOICE_DIR + voice, '-x', SpeechManager.OPENJTALK_DIC_DIR, '-ow', speech_file]
 		open_jtalk = subprocess.Popen(open_jtalk_command, universal_newlines=True, stdin=subprocess.PIPE)
 		open_jtalk.communicate(text)
 		open_jtalk.wait()
