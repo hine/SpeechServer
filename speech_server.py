@@ -49,7 +49,7 @@ class SpeechManager():
 		print('done')
 		if not keep_file:
 			print('Deleting speech data...,', end='')
-			voice_list = [os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*.htsvoice')].extend([os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*/*.htsvoice])
+			voice_list = [os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*.htsvoice')].extend([os.path.basename(r) for r in glob.glob(OPENJTALK_VOICE_DIR.'*/*.htsvoice')])
 			print(voice_list);
 			print('done')
 		print('')
