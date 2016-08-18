@@ -44,7 +44,7 @@ class SpeechManager():
 		mplayer = subprocess.Popen(mplayer_command)
 		mplayer.wait()
 		print('done')
-		if !keep_file:
+		if not keep_file:
 			print('Deleting speech data...,', end='')
 			time.sleep(0.1)
 			os.remove(speech_file)
