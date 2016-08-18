@@ -14,7 +14,7 @@ import time
 import datetime
 import json
 import subprocess
-import ConfigParser
+import configparser
 
 import netifaces
 import tornado.ioloop
@@ -110,7 +110,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
 if __name__ == '__main__':
 
-	inifile = ConfigParser.SafeConfigParser()
+	inifile = configparser.SafeConfigParser()
 	inifile.read("./config.ini")
 
 	# アプリケーション割り当て
