@@ -18,6 +18,11 @@
     }
   };
 
+  $('#speech-text').on('keydown', function(event) {
+    if (event.keyCode == 13) {
+      ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
+    }
+  }
   $('#send-text').on('click', function() {
     if ($('#voice').val() == '') {
       alert("ボイスファイルを指定してください。");
@@ -33,9 +38,7 @@
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
     response = messageData['response']
-    console.log(response);
     if (response == 'voice_list') {
-      console.log(messageData['data']);
       $("#voice").children().remove();
       for (var i = 0, len = messageData['data'].length; i < len; i++) {
         $("#voice").append($("<option>").val(messageData['data'][i]).text(messageData['data'][i]));
