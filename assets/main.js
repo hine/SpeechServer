@@ -11,6 +11,7 @@
   ws.onmessage = function (evt) {
     // WebSocketでメッセージを受け取った時の処理をまとめて
     try {
+      console.log(evt.data)
       var messageData = JSON.parse(evt.data);
       parseMessage(messageData);
     } catch(e) {
