@@ -112,7 +112,7 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 			print('Get Voice List...', end='')
 			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')] + [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')]
 			print(voice_list);
-			self.write_message(json.dumps({'response': 'voise_list', 'data': {voice_list}}))
+			self.write_message(json.dumps({'response': 'voise_list', 'data': voice_list}))
 			print('done')
 
 	def _send_message(self):
