@@ -5,6 +5,7 @@
 
   ws.onopen = function() {
     // WebSocketオープン時の挙動を書く
+    ws.send(JSON.stringify({command: "voice_list"}));
   };
 
   ws.onmessage = function (evt) {
@@ -31,10 +32,9 @@
 
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
-    message = messageData['message']
-    if (message == 'connected') {
-      buttonEnable($('#renv-connect'));
-      buttonDisable($('#renv-disconnect'));
+    response = messageData['response']
+    if (message == 'voice_list') {
+      console.log(messageData['data']);
     }
   }
 

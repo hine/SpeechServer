@@ -48,8 +48,7 @@ class SpeechManager():
 		mplayer.wait()
 		print('done')
 		if not keep_file:
-			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')]
-			voice_list.extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
+			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')].extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
 			print(voice_list);
 			print('Deleting speech data...,', end='')
 			time.sleep(0.1)
@@ -108,12 +107,12 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 			'''
 			print('Saying...', end='')
 			#print(received_data['data']['text'])
-			speech_manager.say(received_data['data']['text'], received_data['data']['voice'])
+			talk_script = received_data['data']['text'].replace('\n','').replace('\r','')
+			speech_manager.say(talk_script, received_data['data']['voice'])
 			print('done')
 		if received_data['command'] == 'voice_list':
 			print('Get Voice List...', end='')
-			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')]
-			voice_list.extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
+			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')].extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
 			print(voice_list);
 			print('done')
 
