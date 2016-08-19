@@ -48,8 +48,9 @@ class SpeechManager():
 		mplayer.wait()
 		print('done')
 		if not keep_file:
-			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')]
-			voice_list.extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
+			#voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')]
+			#voice_list.extend([r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')])
+			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*')]
 			print(voice_list);
 			print('Deleting speech data...,', end='')
 			time.sleep(0.1)
