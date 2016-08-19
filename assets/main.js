@@ -14,7 +14,7 @@
       var messageData = JSON.parse(evt.data);
       parseMessage(messageData);
     } catch(e) {
-      alert('受け取ったメッセージの形式が不正です [message]:' + messageData['message']);
+      alert('受け取ったメッセージの形式が不正です [response]:' + messageData['response']);
     }
   };
 
