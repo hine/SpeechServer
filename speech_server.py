@@ -29,9 +29,12 @@ class SpeechManager():
 	MPLAYER_EXE = '/usr/bin/mplayer'
 	WORK_DIR = '/tmp/'
 	TALK_DIR = './talk/'
-	def __init__(self):
-		pass
-	def say(self, text, voice='mei/mei_happy.htsvoice', file_name=None, keep_file=False):
+	def __init__(self, default_voice=None):
+		if default_voice is not None:
+			self.default_voice = default_voice
+	def say(self, text, voice=None, file_name=None, keep_file=False):
+		if voice is None:
+			voice = self.default_voice
 		if file_name is None:
 			speech_file = SpeechManager.WORK_DIR + 'talk' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '.wav'
 		else:
