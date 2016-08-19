@@ -48,7 +48,6 @@ class SpeechManager():
 		mplayer.wait()
 		print('done')
 		if not keep_file:
-			print(voice_list);
 			print('Deleting speech data...,', end='')
 			time.sleep(0.1)
 			os.remove(speech_file)
