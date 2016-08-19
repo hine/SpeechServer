@@ -21,6 +21,9 @@
   $('#speech-text').on('keydown', function(event) {
     if (event.keyCode == 13) {
       ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
+      if (document.getElementById('enter_key_flag').checked) {
+        $('#speech-text').val('');
+      }
     }
   });
   $('#send-text').on('click', function() {
