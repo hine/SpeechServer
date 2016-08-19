@@ -154,7 +154,7 @@ if __name__ == '__main__':
 	print('Open http://' + ip_addr + ':8888/')
 	print('')
 
-	speech_manager = SpeechManager()
+	speech_manager = SpeechManager(default_voice=inifile['Settings']['DefaultVoice'])
 	speech_manager.say(inifile['Settings']['BootMessage'])
 	speech_manager.say('IPアドレスは、' + ip_addr + 'です。')
 
