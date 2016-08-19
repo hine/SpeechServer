@@ -36,6 +36,10 @@
     console.log(response);
     if (response == 'voice_list') {
       console.log(messageData['data']);
+      $("#voice").children().remove();
+      for (voice_file in messageData['data']) {
+        $("#voice").append($("<option>").val(voice_file).text(voice_file))
+      }
     }
   }
 
