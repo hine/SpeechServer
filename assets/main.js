@@ -33,8 +33,9 @@
 
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
+    console.log(messageData);
     response = messageData['response']
-    if (message == 'voice_list') {
+    if (response == 'voice_list') {
       console.log(messageData['data']);
     }
   }
