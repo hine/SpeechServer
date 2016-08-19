@@ -22,7 +22,7 @@
     if (event.keyCode == 13) {
       ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
     }
-  }
+  });
   $('#send-text').on('click', function() {
     if ($('#voice').val() == '') {
       alert("ボイスファイルを指定してください。");
