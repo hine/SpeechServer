@@ -11,7 +11,6 @@
   ws.onmessage = function (evt) {
     // WebSocketでメッセージを受け取った時の処理をまとめて
     try {
-      console.log(evt.data)
       var messageData = JSON.parse(evt.data);
       parseMessage(messageData);
     } catch(e) {
@@ -33,8 +32,8 @@
 
   function parseMessage(messageData) {
     // WebSocketで受け取ったJSONメッセージの処理
-    console.log(messageData);
     response = messageData['response']
+    console.log(response);
     if (response == 'voice_list') {
       console.log(messageData['data']);
     }
