@@ -123,9 +123,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 		if received_data['command'] == 'dialog':
 			print('Gettin dialog from API...', end='')
 			response = dialog_manager.get_dialog(received_data['data']['text'])
+			talk_script = response['utt']
 			print('done')
 			print('Saying...', end='')
-			speech_manager.say(response)
+			speech_manager.say(talk_script)
 			print('done')
 		if received_data['command'] == 'voice_list':
 			print('Get Voice List...', end='')
