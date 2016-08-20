@@ -22,6 +22,15 @@ import tornado.ioloop
 import tornado.web
 import tornado.websocket
 
+import doco.client
+
+class DialogManager():
+	def __init__(self, api_key):
+		self.api_client = doco.client.Client(apikey=api_key)
+	def get_dialog(self, text):
+		result = self.api_client.send(utt=text, apiname='Dialogue')
+		return result
+
 class SpeechManager():
 	OPENJTALK_EXE = '/usr/bin/open_jtalk'
 	OPENJTALK_DIC_DIR = '/var/lib/mecab/dic/open-jtalk/naist-jdic'
@@ -111,6 +120,13 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 			talk_script = received_data['data']['text'].replace('\n','').replace('\r','')
 			speech_manager.say(talk_script, received_data['data']['voice'])
 			print('done')
+		if received_data['command'] == 'dialog':
+			print('Gettin dialog from API...', end='')
+			response = dialog_manager.get_dialog(received_data['data']['text'])
+			print('done')
+			print('Saying...', end='')
+			speech_manager.say(response)
+			print('done')
 		if received_data['command'] == 'voice_list':
 			print('Get Voice List...', end='')
 			voice_list = [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*.htsvoice')] + [r.replace(SpeechManager.OPENJTALK_VOICE_DIR, '') for r in glob.glob(SpeechManager.OPENJTALK_VOICE_DIR + '*/*.htsvoice')]
@@ -145,6 +161,8 @@ if __name__ == '__main__':
 
 	ip_addr = netifaces.ifaddresses('wlan0')[2][0]['addr'];
 	#ip_addr = '192.168.1.1';
+
+	dialog_manager = DialogManager(api_key=inifile['DocomoAPI']['APIKey'])
 
 	# Tornadoサーバー起動
 	print('Starting Web/WebSocket Server...', end='')
