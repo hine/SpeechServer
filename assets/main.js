@@ -41,7 +41,7 @@
       ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
     }
   });
-  $('#send-text').on('click', function() {
+  $('#send-dialog').on('click', function() {
     ws.send(JSON.stringify({command: "dialog", data: {text: $('#dialog-text').val()}}));
   });
 
