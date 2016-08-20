@@ -26,12 +26,23 @@
       }
     }
   });
+  $('#dialog-text').on('keydown', function(event) {
+    if (event.keyCode == 13) {
+      ws.send(JSON.stringify({command: "dialog", data: {text: $('#dialog-text').val()}}));
+      if (document.getElementById('enter_key_flag').checked) {
+        $('#dialog-text').val('');
+      }
+    }
+  });
   $('#send-text').on('click', function() {
     if ($('#voice').val() == '') {
       alert("ボイスファイルを指定してください。");
     } else {
       ws.send(JSON.stringify({command: "say", data: {text: $('#speech-text').val(), voice: $('#voice').val()}}));
     }
+  });
+  $('#send-text').on('click', function() {
+    ws.send(JSON.stringify({command: "dialog", data: {text: $('#dialog-text').val()}}));
   });
 
   $('#speech-text').on('change keyup', function() {
